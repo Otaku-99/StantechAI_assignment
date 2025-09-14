@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEY=StantechAI
+      - DATABASE_URL=sqlite:///./test.db   # or Postgres URL
+    volumes:
+      - ./app:/app/app
+      - ./test.db:/app/test.db
+    command: >
+      sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
